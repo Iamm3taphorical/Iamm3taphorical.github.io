@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ExperienceItem } from '../types';
 
@@ -34,7 +33,7 @@ const Experience: React.FC<ExperienceProps> = ({ data }) => {
         <SectionTitle>Experience & Projects</SectionTitle>
         <div className="max-w-3xl mx-auto">
             {data.map((item, index) => (
-                <ExperienceTimelineItem key={index} item={item} isLast={index === data.length - 1} />
+                <ExperienceTimelineItem key={`${item.role}-${item.company}-${index}`} item={item} isLast={index === data.length - 1} />
             ))}
         </div>
       </div>

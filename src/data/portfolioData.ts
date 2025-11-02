@@ -1,4 +1,3 @@
-
 import { PortfolioData } from '../types';
 
 export const portfolioData: PortfolioData = {

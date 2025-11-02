@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Award } from '../types';
 
@@ -28,8 +27,8 @@ const Awards: React.FC<AwardsProps> = ({ data }) => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle>Awards & Competitions</SectionTitle>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {data.map((award, index) => (
-            <AwardCard key={index} award={award} />
+          {data.map((award) => (
+            <AwardCard key={award.title} award={award} />
           ))}
         </div>
       </div>

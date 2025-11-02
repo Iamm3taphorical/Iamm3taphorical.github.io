@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { GithubStats } from '../types';
 
@@ -15,6 +14,8 @@ const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
 const StatImage: React.FC<{ src: string, alt: string }> = ({ src, alt }) => (
     <img 
+        loading="lazy"
+        decoding="async"
         src={src} 
         alt={alt} 
         className="w-full rounded-lg shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
@@ -27,6 +28,17 @@ const Stats: React.FC<StatsProps> = ({ data, theme }) => {
     const currentTheme = theme === 'dark' ? darkTheme : lightTheme;
     const summaryCardTheme = theme === 'dark' ? 'dracula' : 'default';
 
+    const getThemedUrl = (baseUrl: string, theme: string) => {
+        try {
+            const url = new URL(baseUrl);
+            url.searchParams.set('theme', theme);
+            return url.toString();
+        } catch (e) {
+            // Fallback for invalid base URLs, though data should be valid
+            return `${baseUrl}&theme=${theme}`;
+        }
+    }
+
     return (
         <section id="stats" className="py-20 md:py-28 bg-white dark:bg-[#11112f]/80 dark:backdrop-blur-md">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,12 +50,12 @@ const Stats: React.FC<StatsProps> = ({ data, theme }) => {
                         <StatImage src={`${data.streak}&theme=${currentTheme}`} alt="GitHub Streak" />
                     </div>
                      <div className="md:col-span-2">
-                         <StatImage src={`${data.summaryCards.profileDetails.replace('radical', summaryCardTheme)}`} alt="Profile Details" />
+                         <StatImage src={getThemedUrl(data.summaryCards.profileDetails, summaryCardTheme)} alt="Profile Details" />
                     </div>
-                    <StatImage src={`${data.summaryCards.reposPerLang.replace('radical', summaryCardTheme)}`} alt="Repos per Language" />
-                    <StatImage src={`${data.summaryCards.mostCommitLang.replace('radical', summaryCardTheme)}`} alt="Most Commit Language" />
-                    <StatImage src={`${data.summaryCards.stats.replace('radical', summaryCardTheme)}`} alt="Summary Stats" />
-                    <StatImage src={`${data.summaryCards.productiveTime.replace('radical', summaryCardTheme)}`} alt="Productive Time" />
+                    <StatImage src={getThemedUrl(data.summaryCards.reposPerLang, summaryCardTheme)} alt="Repos per Language" />
+                    <StatImage src={getThemedUrl(data.summaryCards.mostCommitLang, summaryCardTheme)} alt="Most Commit Language" />
+                    <StatImage src={getThemedUrl(data.summaryCards.stats, summaryCardTheme)} alt="Summary Stats" />
+                    <StatImage src={getThemedUrl(data.summaryCards.productiveTime, summaryCardTheme)} alt="Productive Time" />
                 </div>
             </div>
         </section>

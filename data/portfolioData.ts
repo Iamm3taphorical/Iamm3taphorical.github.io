@@ -1,4 +1,3 @@
-
 import { PortfolioData } from '../types';
 
 export const portfolioData: PortfolioData = {
@@ -29,10 +28,10 @@ export const portfolioData: PortfolioData = {
     { title: "Soft Skills", skills: ["Leadership", "Team Coordination", "Technical Documentation", "Community Management"] }
   ],
   experience: [
-    { role: "Co-Founder", company: "Projukti Lipi", period: "2025 – Present", description: "Co-founded a student tech initiative focused on promoting tech awareness, leading projects, partnerships, and community events." },
-    { role: "Team Member (Machine Vision & AI)", company: "BRACU Duburi", period: "2025 – Present", description: "Working on machine vision and AI subsystems for an autonomous underwater vehicle: object detection, navigation, and real-time decision pipelines." },
-    { role: "Team Member (Control & AI)", company: "BRACU Alter", period: "2025 – Present", description: "Contributing to autonomous rescue rover systems — control theory, system modeling, stability analysis, and AI navigation modules." },
-    { role: "Team Member (Avionics)", company: "BRACU Diganta", period: "2025 – Present", description: "Developing avionics and embedded software for UAVs: sensor integration, communication modules, and flight data handling." },
+    { role: "Co-Founder", company: "Projukti Lipi", period: "2024 – Present", description: "Co-founded a student tech initiative focused on promoting tech awareness, leading projects, partnerships, and community events." },
+    { role: "Team Member (Machine Vision & AI)", company: "BRACU Duburi", period: "2024 – Present", description: "Working on machine vision and AI subsystems for an autonomous underwater vehicle: object detection, navigation, and real-time decision pipelines." },
+    { role: "Team Member (Control & AI)", company: "BRACU Alter", period: "2024 – Present", description: "Contributing to autonomous rescue rover systems — control theory, system modeling, stability analysis, and AI navigation modules." },
+    { role: "Team Member (Avionics)", company: "BRACU Diganta", period: "2024 – Present", description: "Developing avionics and embedded software for UAVs: sensor integration, communication modules, and flight data handling." },
     { role: "Apprentice", company: "Robotics Club of BRAC University (ROBU)", period: "2024 – Present", description: "Supported robotics projects by streamlining HR operations, coordinating members, and improving collaboration across project teams. Participated in hands-on robotics prototyping and testing workflows." },
     { role: "Executive", company: "BRAC University Computer Club (BUCC)", period: "2024 – Present", description: "Managed member engagement and community activities, organized workshops and coding sessions, and assisted in club project coordination." },
     { role: "General Member", company: "IEEE BRACU Student Branch", period: "2024 – Present", description: "Engaged in research collaboration initiatives and technical events to strengthen the student research ecosystem." },

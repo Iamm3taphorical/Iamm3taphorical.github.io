@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 
 interface HeaderProps {
@@ -45,10 +44,10 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                         {navLinks.map(link => <NavLink key={link.href} href={link.href} onClick={closeMenu}>{link.label}</NavLink>)}
                     </nav>
                     <div className="flex items-center space-x-4">
-                        <button onClick={toggleTheme} className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">
+                        <button onClick={toggleTheme} className="w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300" aria-label="Toggle theme">
                             <i className={`fas ${theme === 'dark' ? 'fa-sun' : 'fa-moon'} text-lg`}></i>
                         </button>
-                        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden w-10 h-10 rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200" aria-label={isOpen ? "Close menu" : "Open menu"}>
                             <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'} text-lg`}></i>
                         </button>
                     </div>
