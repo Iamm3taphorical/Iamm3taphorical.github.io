@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen overflow-x-hidden`}
       >
         <ThemeProvider
           attribute="class"
@@ -56,10 +56,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SoundProvider>
-            {/* Canvas Background - Rendered by page.tsx */}
-            <div className="relative z-10">
-              {children}
-            </div>
+            {children}
           </SoundProvider>
         </ThemeProvider>
       </body>
