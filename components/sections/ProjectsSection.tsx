@@ -1,38 +1,38 @@
 'use client'
 
-import { Laptop, Cloud, Code2, Bot, Wrench } from 'lucide-react'
+import { Code2, Brain, Laptop, Server, Zap, Box } from 'lucide-react'
 
 export function ProjectsSection() {
     const projects = [
         {
-            title: 'MERN Stack Development',
-            desc: 'Completed a comprehensive workshop on MERN stack development, covering MongoDB, Express.js, React, and Node.js.',
+            title: 'CSE220_Data_Structure',
+            desc: 'Deepening mastery with production-quality implementations and documented learning resources for Data Structures & Algorithms in Java.',
+            icon: <Code2 className="h-10 w-10" />,
+        },
+        {
+            title: 'yolo-opencv-bottle-detection',
+            desc: 'Developing reliable pipelines for image/video input, model inference, and annotated output using YOLO and OpenCV for robotics applications.',
+            icon: <Brain className="h-10 w-10" />,
+        },
+        {
+            title: 'Iamm3taphorical.github.io',
+            desc: 'Full-stack portfolio website built with Next.js, TypeScript, Tailwind CSS, and reactive 3D shaders.',
             icon: <Laptop className="h-10 w-10" />,
         },
         {
-            title: 'AWS Academy Cloud Foundations',
-            desc: 'Gained foundational knowledge of AWS cloud services and infrastructure through AWS Academy certification.',
-            icon: <Cloud className="h-10 w-10" />,
+            title: 'MERN Stack Development',
+            desc: 'Comprehensive workshop on MERN stack development covering MongoDB, Express.js, React, and Node.js.',
+            icon: <Server className="h-10 w-10" />,
         },
         {
-            title: 'Java Programming',
-            desc: 'Completed "The Ultimate Java Programming Course" on Udemy, mastering object-oriented programming concepts.',
-            icon: <Code2 className="h-10 w-10" />,
+            title: 'AWS Academy Cloud Foundations',
+            desc: 'Foundational knowledge of AWS cloud services and infrastructure through AWS Academy certification.',
+            icon: <Zap className="h-10 w-10" />,
         },
         {
             title: 'Generative AI with AWS',
-            desc: 'Learned about generative AI technologies and their implementation using AWS services through Udacity.',
-            icon: <Bot className="h-10 w-10" />,
-        },
-        {
-            title: 'CodeApproach Advisor',
-            desc: 'Utilized AI tools for code analysis and improvement recommendations as part of the CodeApproach program.',
-            icon: <Wrench className="h-10 w-10" />,
-        },
-        {
-            title: 'Python Programming',
-            desc: 'Completed "Introduction to Python Programming" on Udacity, building a strong foundation in Python.',
-            icon: <Code2 className="h-10 w-10" />,
+            desc: 'Exploration of generative AI technologies and their implementation using AWS services.',
+            icon: <Brain className="h-10 w-10" />,
         }
     ]
 
@@ -47,13 +47,13 @@ export function ProjectsSection() {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, idx) => (
-                        <div key={idx} className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-border group">
+                        <div key={idx} className="bg-background rounded-xl overflow-hidden shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-border group flex flex-col">
                             <div className="h-40 bg-[var(--accent)] flex items-center justify-center text-[var(--secondary)] group-hover:bg-[var(--japanese-red)] group-hover:text-white transition-colors duration-300">
                                 {project.icon}
                             </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-bold text-[var(--japanese-red)] mb-3">{project.title}</h3>
-                                <p className="text-muted-foreground">{project.desc}</p>
+                            <div className="p-6 flex-1 flex flex-col">
+                                <h3 className="text-xl font-bold text-[var(--japanese-red)] mb-3 break-words">{project.title}</h3>
+                                <p className="text-muted-foreground flex-1">{project.desc}</p>
                             </div>
                         </div>
                     ))}

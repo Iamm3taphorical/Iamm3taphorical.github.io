@@ -1,11 +1,11 @@
 'use client'
 
-import { Code2, Globe, Database, Cpu, Smartphone, Users, Brain, Terminal } from 'lucide-react'
+import { Code2, Globe, Database, Cpu, Smartphone, Users, Brain, Terminal, CircuitBoard, Layers } from 'lucide-react'
 
 export function SkillsSection() {
     const skills = [
         {
-            category: 'Programming Languages',
+            category: 'Languages',
             items: [
                 { name: 'Java', icon: <Code2 className="h-5 w-5" /> },
                 { name: 'Python', icon: <Terminal className="h-5 w-5" /> },
@@ -14,23 +14,44 @@ export function SkillsSection() {
             ]
         },
         {
-            category: 'Web Technologies',
+            category: 'Web',
             items: [
                 { name: 'HTML', icon: <Globe className="h-5 w-5" /> },
                 { name: 'CSS', icon: <Globe className="h-5 w-5" /> },
                 { name: 'JavaScript', icon: <Globe className="h-5 w-5" /> },
                 { name: 'TypeScript', icon: <Globe className="h-5 w-5" /> },
+                { name: 'React', icon: <Globe className="h-5 w-5" /> },
+                { name: 'Node.js', icon: <Globe className="h-5 w-5" /> },
+                { name: 'Express', icon: <Globe className="h-5 w-5" /> },
+                { name: 'MongoDB', icon: <Database className="h-5 w-5" /> },
+                { name: 'MySQL', icon: <Database className="h-5 w-5" /> },
             ]
         },
         {
-            category: 'Core Skills',
+            category: 'Robotics & Embedded',
             items: [
-                { name: 'OOP in Java', icon: <Database className="h-5 w-5" /> },
-                { name: 'Procedural Python', icon: <Terminal className="h-5 w-5" /> },
-                { name: 'Functional Python', icon: <Terminal className="h-5 w-5" /> },
-                { name: 'Android Dev', icon: <Smartphone className="h-5 w-5" /> },
+                { name: 'Machine Vision', icon: <Brain className="h-5 w-5" /> },
+                { name: 'Control Systems', icon: <CircuitBoard className="h-5 w-5" /> },
+                { name: 'Sensor Integration', icon: <Cpu className="h-5 w-5" /> },
+                { name: 'Embedded Programming', icon: <Cpu className="h-5 w-5" /> },
+            ]
+        },
+        {
+            category: 'Dev Practices',
+            items: [
+                { name: 'OOP', icon: <Layers className="h-5 w-5" /> },
+                { name: 'Functional Programming', icon: <Layers className="h-5 w-5" /> },
+                { name: 'Procedural Programming', icon: <Layers className="h-5 w-5" /> },
+                { name: 'REST APIs', icon: <Globe className="h-5 w-5" /> },
+            ]
+        },
+        {
+            category: 'Soft Skills',
+            items: [
+                { name: 'Leadership', icon: <Users className="h-5 w-5" /> },
                 { name: 'Team Coordination', icon: <Users className="h-5 w-5" /> },
-                { name: 'Analytical Thinking', icon: <Brain className="h-5 w-5" /> },
+                { name: 'Technical Documentation', icon: <Users className="h-5 w-5" /> },
+                { name: 'Content & Community', icon: <Users className="h-5 w-5" /> },
             ]
         }
     ]
@@ -40,7 +61,7 @@ export function SkillsSection() {
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">
-                        Skills
+                        Skills & Technologies
                     </h2>
                 </div>
 

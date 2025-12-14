@@ -23,8 +23,11 @@ export function ContactSection() {
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">
-                        Contact Me
+                        Let's Collaborate
                     </h2>
+                    <p className="mt-8 text-lg text-muted-foreground max-w-2xl mx-auto">
+                        I’m always open to collaboration on robotics, web systems, and AI projects. Feel free to reach out for open-source contributions, mentorship, or hackathons.
+                    </p>
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-12 bg-card/80 backdrop-blur-sm p-8 rounded-xl shadow-2xl border border-border">
