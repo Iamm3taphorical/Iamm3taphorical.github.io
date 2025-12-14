@@ -1,65 +1,9 @@
 "use client"
 
 import { useRef, ReactNode, useEffect, useState } from "react"
-import { motion, useScroll, useTransform, useSpring, Variants, useInView } from "framer-motion"
+import { motion, useInView, Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
-// Page flip wrapper for sections - creates book page turning effect
-interface PageFlipSectionProps {
-    children: ReactNode
-    className?: string
-    index: number
-}
-
-export function PageFlipSection({ children, className, index }: PageFlipSectionProps) {
-    const ref = useRef<HTMLDivElement>(null)
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end start"]
-    })
-
-    // Smooth spring for the rotation
-    const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 }
-
-    // Calculate rotation based on scroll - page flip from left to right
-    const rotateY = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [15, 0, 0, -15])
-    const smoothRotateY = useSpring(rotateY, springConfig)
-
-    // Shadow intensity changes with rotation
-    const shadowOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 0, 0, 0.3])
-    const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95])
-    const smoothScale = useSpring(scale, springConfig)
-
-    return (
-        <motion.div
-            ref={ref}
-            style={{
-                rotateY: smoothRotateY,
-                scale: smoothScale,
-                transformPerspective: 1200,
-                transformOrigin: index % 2 === 0 ? "left center" : "right center",
-            }}
-            className={cn(
-                "relative will-change-transform",
-                className
-            )}
-        >
-            {/* Page shadow effect */}
-            <motion.div
-                style={{ opacity: shadowOpacity }}
-                className={cn(
-                    "absolute inset-0 pointer-events-none z-10",
-                    index % 2 === 0
-                        ? "bg-gradient-to-r from-black/20 to-transparent"
-                        : "bg-gradient-to-l from-black/20 to-transparent"
-                )}
-            />
-            {children}
-        </motion.div>
-    )
-}
-
-// Standard scroll animation component
 interface ScrollAnimationProps {
     children: ReactNode
     className?: string
@@ -105,12 +49,14 @@ export function ScrollAnimation({
                 y,
                 x,
                 scale: direction === "scale" ? 0.95 : 1,
+                filter: isMobile ? "none" : "blur(4px)",
             },
             visible: {
                 opacity: 1,
                 y: 0,
                 x: 0,
                 scale: 1,
+                filter: "blur(0px)",
                 transition: {
                     duration: isMobile ? duration * 0.7 : duration,
                     delay: isMobile ? delay * 0.5 : delay,
@@ -133,7 +79,6 @@ export function ScrollAnimation({
     )
 }
 
-// Stagger container for grouped animations
 interface StaggerContainerProps {
     children: ReactNode
     className?: string
