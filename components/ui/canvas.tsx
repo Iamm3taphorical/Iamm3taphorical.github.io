@@ -8,11 +8,15 @@ let f: any = null
 let e = 0
 let pos: { x: number; y: number } = { x: 0, y: 0 }
 let lines: any[] = []
+
+// Detect mobile for performance optimization
+const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window)
+
 const E = {
     debug: true,
     friction: 0.5,
-    trails: 50,
-    size: 40,
+    trails: isMobile ? 40 : 80,  // Fewer trails on mobile
+    size: isMobile ? 30 : 50,     // Smaller size on mobile
     dampening: 0.025,
     tension: 0.99,
 }
@@ -144,8 +148,8 @@ function render() {
         ctx.globalCompositeOperation = 'source-over'
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         ctx.globalCompositeOperation = 'lighter'
-        ctx.strokeStyle = `hsla(${Math.round(f.update())}, 90%, 50%, 0.03)`
-        ctx.lineWidth = 8
+        ctx.strokeStyle = `hsla(${Math.round(f.update())}, 100%, 50%, 0.025)`
+        ctx.lineWidth = 10
         for (let i = 0; i < E.trails; i++) {
             const line = lines[i]
             line.update()
@@ -158,7 +162,7 @@ function render() {
 
 function resizeCanvas() {
     if (ctx) {
-        ctx.canvas.width = window.innerWidth
+        ctx.canvas.width = window.innerWidth - 20
         ctx.canvas.height = window.innerHeight
     }
 }
