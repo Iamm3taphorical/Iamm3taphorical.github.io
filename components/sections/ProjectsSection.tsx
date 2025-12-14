@@ -45,10 +45,11 @@ const projects = [
     },
     {
         title: 'Real-time Object Detection',
-        desc: 'Multi-mode detection with GPU acceleration and webcam support.',
-        icon: <Cpu className="h-6 w-6" />,
-        tags: ['YOLOv8', 'CUDA'],
+        desc: 'Multi-mode detection system with GPU acceleration (CUDA), webcam support, and batch processing for live video streams.',
+        icon: <Cpu className="h-7 w-7" />,
+        tags: ['YOLOv8', 'CUDA', 'Real-time'],
         github: 'https://github.com/Iamm3taphorical/object-detection',
+        featured: true,
     },
     {
         title: 'Video Detection System',

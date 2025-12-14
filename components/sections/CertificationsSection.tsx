@@ -106,7 +106,7 @@ export function CertificationsSection() {
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 <ScrollAnimation className="text-center mb-12 md:mb-16">
-                    <h2 className="section-title">Certifications & Achievements</h2>
+                    <h2 className="section-title">Certificates</h2>
                     <p className="mt-8 text-muted-foreground max-w-2xl mx-auto text-sm md:text-lg">
                         Continuous learning through courses, competitions, and certifications
                     </p>
