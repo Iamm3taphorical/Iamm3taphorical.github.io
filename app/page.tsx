@@ -12,6 +12,7 @@ import { ProjectsSection } from '@/components/sections/ProjectsSection'
 import { AwardsSection } from '@/components/sections/AwardsSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 import { Footer } from '@/components/sections/Footer'
+import { IntroAnimation } from '@/components/ui/intro-animation'
 import { renderCanvas, stopCanvas } from '@/components/ui/canvas'
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
   }, [])
 
   return (
-    <>
+    <IntroAnimation>
       {/* Canvas Animation - Fixed on top of everything with pointer-events-none */}
       <canvas
         id="canvas"
@@ -50,6 +51,6 @@ export default function Home() {
         <ContactSection />
         <Footer />
       </main>
-    </>
+    </IntroAnimation>
   )
 }

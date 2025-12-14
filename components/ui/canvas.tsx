@@ -1,210 +1,303 @@
 "use client"
 
 // Canvas-based animated line trails following cursor - rainbow color cycling effect
-// @ts-nocheck
+// Optimized for 60fps desktop / 30fps mobile with proper cleanup
 
+interface NodePoint {
+    x: number
+    y: number
+    vx: number
+    vy: number
+}
+
+interface LineTrail {
+    spring: number
+    friction: number
+    nodes: NodePoint[]
+    update: () => void
+    draw: () => void
+}
+
+interface Oscillator {
+    phase: number
+    offset: number
+    frequency: number
+    amplitude: number
+    update: () => number
+}
+
+// Module-level state (managed carefully)
 let ctx: CanvasRenderingContext2D | null = null
-let f: any = null
-let e = 0
-let pos: { x: number; y: number } = { x: 0, y: 0 }
-let lines: any[] = []
+let oscillator: Oscillator | null = null
+let hueValue = 0
+let pos = { x: 0, y: 0 }
+let lines: LineTrail[] = []
+let animationId: number | null = null
+let lastFrameTime = 0
+let isInitialized = false
+let eventListenersAttached = false
 
-// Detect mobile for performance optimization
-const isMobile = typeof window !== 'undefined' && (window.innerWidth < 768 || 'ontouchstart' in window)
+// Configuration - dynamically set based on device
+const getConfig = () => {
+    const isMobile = typeof window !== 'undefined' &&
+        (window.innerWidth < 768 || 'ontouchstart' in window || navigator.maxTouchPoints > 0)
 
-const E = {
-    debug: true,
-    friction: 0.5,
-    trails: isMobile ? 40 : 80,  // Fewer trails on mobile
-    size: isMobile ? 30 : 50,     // Smaller size on mobile
-    dampening: 0.025,
-    tension: 0.99,
-}
-
-function Node() {
-    // @ts-ignore
-    this.x = 0
-    // @ts-ignore
-    this.y = 0
-    // @ts-ignore
-    this.vy = 0
-    // @ts-ignore
-    this.vx = 0
-}
-
-function Oscillator(opts: any) {
-    // @ts-ignore
-    this.phase = opts.phase || 0
-    // @ts-ignore
-    this.offset = opts.offset || 0
-    // @ts-ignore
-    this.frequency = opts.frequency || 0.001
-    // @ts-ignore
-    this.amplitude = opts.amplitude || 1
-}
-
-Oscillator.prototype.update = function () {
-    this.phase += this.frequency
-    e = this.offset + Math.sin(this.phase) * this.amplitude
-    return e
-}
-
-function Line(opts: any) {
-    // @ts-ignore
-    this.spring = opts.spring + 0.1 * Math.random() - 0.05
-    // @ts-ignore
-    this.friction = E.friction + 0.01 * Math.random() - 0.005
-    // @ts-ignore
-    this.nodes = []
-    for (let i = 0; i < E.size; i++) {
-        // @ts-ignore
-        const t = new Node()
-        t.x = pos.x
-        t.y = pos.y
-        // @ts-ignore
-        this.nodes.push(t)
+    return {
+        friction: 0.5,
+        trails: isMobile ? 30 : 60,      // Fewer trails on mobile
+        size: isMobile ? 25 : 40,        // Smaller nodes on mobile
+        dampening: 0.025,
+        tension: 0.99,
+        targetFPS: isMobile ? 30 : 60,   // Lower FPS on mobile
+        lineWidth: isMobile ? 6 : 10,
+        opacity: isMobile ? 0.03 : 0.025,
     }
 }
 
-Line.prototype.update = function () {
-    let spring = this.spring
-    let t = this.nodes[0]
-    t.vx += (pos.x - t.x) * spring
-    t.vy += (pos.y - t.y) * spring
-    for (let i = 0; i < this.nodes.length; i++) {
-        t = this.nodes[i]
-        if (i > 0) {
-            const n = this.nodes[i - 1]
-            t.vx += (n.x - t.x) * spring
-            t.vy += (n.y - t.y) * spring
-            t.vx += n.vx * E.dampening
-            t.vy += n.vy * E.dampening
-        }
-        t.vx *= this.friction
-        t.vy *= this.friction
-        t.x += t.vx
-        t.y += t.vy
-        spring *= E.tension
-    }
+let config = getConfig()
+
+function createNode(x: number, y: number): NodePoint {
+    return { x, y, vx: 0, vy: 0 }
 }
 
-Line.prototype.draw = function () {
-    let x = this.nodes[0].x
-    let y = this.nodes[0].y
-    ctx?.beginPath()
-    ctx?.moveTo(x, y)
-    for (let i = 1; i < this.nodes.length - 2; i++) {
-        const node = this.nodes[i]
-        const nextNode = this.nodes[i + 1]
-        x = 0.5 * (node.x + nextNode.x)
-        y = 0.5 * (node.y + nextNode.y)
-        ctx?.quadraticCurveTo(node.x, node.y, x, y)
-    }
-    const lastNode = this.nodes[this.nodes.length - 2]
-    const endNode = this.nodes[this.nodes.length - 1]
-    ctx?.quadraticCurveTo(lastNode.x, lastNode.y, endNode.x, endNode.y)
-    ctx?.stroke()
-    ctx?.closePath()
-}
-
-function onMousemove(event: MouseEvent | TouchEvent) {
-    function initLines() {
-        lines = []
-        for (let i = 0; i < E.trails; i++) {
-            // @ts-ignore
-            lines.push(new Line({ spring: 0.45 + (i / E.trails) * 0.025 }))
+function createOscillator(opts: Partial<Oscillator>): Oscillator {
+    return {
+        phase: opts.phase || 0,
+        offset: opts.offset || 0,
+        frequency: opts.frequency || 0.001,
+        amplitude: opts.amplitude || 1,
+        update() {
+            this.phase += this.frequency
+            hueValue = this.offset + Math.sin(this.phase) * this.amplitude
+            return hueValue
         }
     }
+}
 
-    function handleMove(e: MouseEvent | TouchEvent) {
-        if ('touches' in e && e.touches) {
-            pos.x = e.touches[0].pageX
-            pos.y = e.touches[0].pageY
-        } else if ('clientX' in e) {
-            pos.x = e.clientX
-            pos.y = e.clientY
-        }
+function createLine(spring: number): LineTrail {
+    const lineSpring = spring + 0.1 * Math.random() - 0.05
+    const lineFriction = config.friction + 0.01 * Math.random() - 0.005
+    const nodes: NodePoint[] = []
+
+    for (let i = 0; i < config.size; i++) {
+        nodes.push(createNode(pos.x, pos.y))
     }
 
-    function handleTouch(e: TouchEvent) {
-        if (e.touches.length === 1) {
-            pos.x = e.touches[0].pageX
-            pos.y = e.touches[0].pageY
+    return {
+        spring: lineSpring,
+        friction: lineFriction,
+        nodes,
+        update() {
+            let currentSpring = this.spring
+            let node = this.nodes[0]
+
+            node.vx += (pos.x - node.x) * currentSpring
+            node.vy += (pos.y - node.y) * currentSpring
+
+            for (let i = 0; i < this.nodes.length; i++) {
+                node = this.nodes[i]
+
+                if (i > 0) {
+                    const prev = this.nodes[i - 1]
+                    node.vx += (prev.x - node.x) * currentSpring
+                    node.vy += (prev.y - node.y) * currentSpring
+                    node.vx += prev.vx * config.dampening
+                    node.vy += prev.vy * config.dampening
+                }
+
+                node.vx *= this.friction
+                node.vy *= this.friction
+                node.x += node.vx
+                node.y += node.vy
+                currentSpring *= config.tension
+            }
+        },
+        draw() {
+            if (!ctx) return
+
+            const firstNode = this.nodes[0]
+            ctx.beginPath()
+            ctx.moveTo(firstNode.x, firstNode.y)
+
+            for (let i = 1; i < this.nodes.length - 2; i++) {
+                const node = this.nodes[i]
+                const nextNode = this.nodes[i + 1]
+                const x = 0.5 * (node.x + nextNode.x)
+                const y = 0.5 * (node.y + nextNode.y)
+                ctx.quadraticCurveTo(node.x, node.y, x, y)
+            }
+
+            const secondLast = this.nodes[this.nodes.length - 2]
+            const last = this.nodes[this.nodes.length - 1]
+            if (secondLast && last) {
+                ctx.quadraticCurveTo(secondLast.x, secondLast.y, last.x, last.y)
+            }
+
+            ctx.stroke()
         }
     }
+}
 
-    document.removeEventListener('mousemove', onMousemove as any)
-    document.removeEventListener('touchstart', onMousemove as any)
-    document.addEventListener('mousemove', handleMove as any, { passive: true })
-    document.addEventListener('touchmove', handleMove as any, { passive: true })
-    document.addEventListener('touchstart', handleTouch as any, { passive: true })
-    handleMove(event)
+function initLines() {
+    lines = []
+    for (let i = 0; i < config.trails; i++) {
+        lines.push(createLine(0.45 + (i / config.trails) * 0.025))
+    }
+}
+
+// Event handlers with proper binding
+function handleMove(e: MouseEvent | TouchEvent) {
+    if ('touches' in e && e.touches.length > 0) {
+        pos.x = e.touches[0].pageX
+        pos.y = e.touches[0].pageY
+    } else if ('clientX' in e) {
+        pos.x = e.clientX
+        pos.y = e.clientY
+    }
+}
+
+function handleFirstInteraction(e: MouseEvent | TouchEvent) {
+    // Remove first interaction listeners
+    document.removeEventListener('mousemove', handleFirstInteraction)
+    document.removeEventListener('touchstart', handleFirstInteraction)
+
+    // Add continuous tracking
+    document.addEventListener('mousemove', handleMove, { passive: true })
+    document.addEventListener('touchmove', handleMove, { passive: true })
+    document.addEventListener('touchstart', handleMove, { passive: true })
+
+    // Initialize position and start
+    handleMove(e)
     initLines()
-    render()
+
+    if (!animationId) {
+        lastFrameTime = performance.now()
+        render()
+    }
 }
 
 function render() {
-    if (ctx && (ctx as any).running) {
-        ctx.globalCompositeOperation = 'source-over'
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-        ctx.globalCompositeOperation = 'lighter'
-        ctx.strokeStyle = `hsla(${Math.round(f.update())}, 100%, 50%, 0.025)`
-        ctx.lineWidth = 10
-        for (let i = 0; i < E.trails; i++) {
-            const line = lines[i]
-            line.update()
-            line.draw()
-        }
-        ; (ctx as any).frame++
-        window.requestAnimationFrame(render)
+    if (!ctx || !isInitialized) return
+
+    const now = performance.now()
+    const elapsed = now - lastFrameTime
+    const frameInterval = 1000 / config.targetFPS
+
+    // Frame rate limiting
+    if (elapsed < frameInterval) {
+        animationId = requestAnimationFrame(render)
+        return
     }
+
+    lastFrameTime = now - (elapsed % frameInterval)
+
+    // Clear and draw
+    ctx.globalCompositeOperation = 'source-over'
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    ctx.globalCompositeOperation = 'lighter'
+
+    if (oscillator) {
+        ctx.strokeStyle = `hsla(${Math.round(oscillator.update())}, 100%, 50%, ${config.opacity})`
+    }
+    ctx.lineWidth = config.lineWidth
+
+    for (let i = 0; i < lines.length; i++) {
+        lines[i].update()
+        lines[i].draw()
+    }
+
+    animationId = requestAnimationFrame(render)
 }
 
 function resizeCanvas() {
-    if (ctx) {
-        ctx.canvas.width = window.innerWidth - 20
-        ctx.canvas.height = window.innerHeight
-    }
+    if (!ctx) return
+
+    // Use devicePixelRatio for crisp rendering on high-DPI displays
+    const dpr = Math.min(window.devicePixelRatio || 1, 2) // Cap at 2x for performance
+    const width = window.innerWidth
+    const height = window.innerHeight
+
+    ctx.canvas.width = width * dpr
+    ctx.canvas.height = height * dpr
+    ctx.canvas.style.width = `${width}px`
+    ctx.canvas.style.height = `${height}px`
+    ctx.scale(dpr, dpr)
+
+    // Recalculate config on resize (device might rotate)
+    config = getConfig()
 }
 
-export const renderCanvas = function () {
+export function renderCanvas() {
+    if (typeof window === 'undefined') return
+    if (isInitialized) return // Prevent double initialization
+
     const canvas = document.getElementById('canvas') as HTMLCanvasElement
     if (!canvas) return
 
-    ctx = canvas.getContext('2d')
+    ctx = canvas.getContext('2d', { alpha: true })
     if (!ctx) return
 
-        ; (ctx as any).running = true
-        ; (ctx as any).frame = 1
+    isInitialized = true
 
-    // @ts-ignore
-    f = new Oscillator({
+    // Initialize oscillator for rainbow colors
+    oscillator = createOscillator({
         phase: Math.random() * 2 * Math.PI,
         amplitude: 85,
         frequency: 0.0015,
         offset: 285,
     })
 
-    document.addEventListener('mousemove', onMousemove as any, { passive: true })
-    document.addEventListener('touchstart', onMousemove as any, { passive: true })
-    document.body.addEventListener('orientationchange', resizeCanvas)
-    window.addEventListener('resize', resizeCanvas)
-    window.addEventListener('focus', () => {
-        if (ctx && !(ctx as any).running) {
-            ; (ctx as any).running = true
+    // Set initial position to center
+    pos.x = window.innerWidth / 2
+    pos.y = window.innerHeight / 2
+
+    // Setup resize handler
+    window.addEventListener('resize', resizeCanvas, { passive: true })
+    window.addEventListener('orientationchange', resizeCanvas, { passive: true })
+
+    // Initial resize
+    resizeCanvas()
+
+    // Setup interaction listeners (only once)
+    if (!eventListenersAttached) {
+        document.addEventListener('mousemove', handleFirstInteraction, { passive: true })
+        document.addEventListener('touchstart', handleFirstInteraction, { passive: true })
+        eventListenersAttached = true
+    }
+
+    // Handle visibility changes for performance
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            if (animationId) {
+                cancelAnimationFrame(animationId)
+                animationId = null
+            }
+        } else if (isInitialized && lines.length > 0) {
+            lastFrameTime = performance.now()
             render()
         }
     })
-    window.addEventListener('blur', () => {
-        if (ctx) {
-            ; (ctx as any).running = true
-        }
-    })
-    resizeCanvas()
 }
 
-export const stopCanvas = function () {
-    if (ctx) {
-        ; (ctx as any).running = false
+export function stopCanvas() {
+    isInitialized = false
+
+    if (animationId) {
+        cancelAnimationFrame(animationId)
+        animationId = null
     }
+
+    // Clean up event listeners
+    document.removeEventListener('mousemove', handleFirstInteraction)
+    document.removeEventListener('touchstart', handleFirstInteraction)
+    document.removeEventListener('mousemove', handleMove)
+    document.removeEventListener('touchmove', handleMove)
+    document.removeEventListener('touchstart', handleMove)
+    window.removeEventListener('resize', resizeCanvas)
+    window.removeEventListener('orientationchange', resizeCanvas)
+
+    eventListenersAttached = false
+    lines = []
+    ctx = null
+    oscillator = null
 }
