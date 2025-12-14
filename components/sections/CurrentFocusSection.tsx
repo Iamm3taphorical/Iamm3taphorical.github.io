@@ -1,6 +1,7 @@
 'use client'
 
 import { Target, Zap, Server, Brain, Code, BookOpen } from 'lucide-react'
+import { ScrollAnimation } from '@/components/ui/scroll-animation'
 
 export function CurrentFocusSection() {
     const priorities = [
@@ -39,18 +40,18 @@ export function CurrentFocusSection() {
     return (
         <section id="focus" className="py-24 bg-card">
             <div className="container mx-auto px-6">
-                <div className="text-center mb-16 relative">
+                <ScrollAnimation className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">
                         Current Focus
                     </h2>
                     <p className="mt-8 text-lg text-muted-foreground max-w-2xl mx-auto">
                         I focus on building end-to-end systems that combine robust software engineering with real-world robotics and ML.
                     </p>
-                </div>
+                </ScrollAnimation>
 
                 <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                     {priorities.map((item, index) => (
-                        <div key={index} className="flex gap-4 p-6 bg-background rounded-xl shadow-md border border-border">
+                        <ScrollAnimation key={index} className="flex gap-4 p-6 bg-background rounded-xl shadow-md border border-border">
                             <div className="shrink-0 pt-1">
                                 {item.icon}
                             </div>
@@ -58,18 +59,18 @@ export function CurrentFocusSection() {
                                 <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
                                 <p className="text-muted-foreground">{item.desc}</p>
                             </div>
-                        </div>
+                        </ScrollAnimation>
                     ))}
                 </div>
 
-                <div className="mt-16 bg-background p-8 rounded-xl border border-[var(--japanese-red)] max-w-3xl mx-auto">
+                <ScrollAnimation className="mt-16 bg-background p-8 rounded-xl border border-[var(--japanese-red)] max-w-3xl mx-auto">
                     <h3 className="text-2xl font-bold text-[var(--japanese-red)] mb-6 text-center">Short-Term Goals (Next 3 Months)</h3>
                     <ul className="space-y-4 list-decimal list-inside text-lg text-foreground">
                         <li>Convert key YOLO notebooks into reusable Python packages with CLI interfaces.</li>
                         <li>Harden <code>CSE220_Data_Structure</code> with test suites and example problems for each operation.</li>
                         <li>Deploy a perception → inference → dashboard demo (via GitHub Pages + lightweight backend/cloud function).</li>
                     </ul>
-                </div>
+                </ScrollAnimation>
             </div>
         </section>
     )

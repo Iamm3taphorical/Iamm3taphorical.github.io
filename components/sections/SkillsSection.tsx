@@ -1,6 +1,8 @@
 'use client'
 
-import { Code2, Globe, Database, Cpu, Smartphone, Users, Brain, Terminal, CircuitBoard, Layers } from 'lucide-react'
+import { Code2, Globe, Database, Cpu, Users, Brain, Terminal, CircuitBoard, Layers } from 'lucide-react'
+import { ShaderAnimation } from '@/components/ui/shader-animation'
+import { ScrollAnimation } from '@/components/ui/scroll-animation'
 
 export function SkillsSection() {
     const skills = [
@@ -57,17 +59,22 @@ export function SkillsSection() {
     ]
 
     return (
-        <section id="skills" className="py-24 bg-background">
-            <div className="container mx-auto px-6">
-                <div className="text-center mb-16 relative">
+        <section id="skills" className="py-24 relative overflow-hidden">
+            {/* Shader Background */}
+            <div className="absolute inset-0 z-0 opacity-30">
+                <ShaderAnimation />
+            </div>
+
+            <div className="container mx-auto px-6 relative z-10">
+                <ScrollAnimation className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">
                         Skills & Technologies
                     </h2>
-                </div>
+                </ScrollAnimation>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {skills.map((category, idx) => (
-                        <div key={idx} className="bg-card p-8 rounded-xl shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-border">
+                        <ScrollAnimation key={idx} className="bg-card/90 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:-translate-y-2 transition-transform duration-300 border border-border">
                             <h3 className="text-2xl font-bold text-[var(--japanese-red)] mb-6 text-center">{category.category}</h3>
                             <ul className="space-y-4">
                                 {category.items.map((skill, index) => (
@@ -79,7 +86,7 @@ export function SkillsSection() {
                                     </li>
                                 ))}
                             </ul>
-                        </div>
+                        </ScrollAnimation>
                     ))}
                 </div>
             </div>

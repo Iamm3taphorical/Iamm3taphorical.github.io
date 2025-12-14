@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { ScrollAnimation } from '@/components/ui/scroll-animation'
 
 export function ExperienceSection() {
     const experience = [
@@ -57,15 +58,15 @@ export function ExperienceSection() {
     return (
         <section id="experience" className="py-24 bg-card">
             <div className="container mx-auto px-6">
-                <div className="text-center mb-16 relative">
+                <ScrollAnimation className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">
                         Experience
                     </h2>
-                </div>
+                </ScrollAnimation>
 
                 <div className="grid gap-8 max-w-4xl mx-auto">
                     {experience.map((item, index) => (
-                        <div key={index} className="bg-background p-6 rounded-lg shadow-lg border border-border hover:border-[var(--japanese-red)] transition-all">
+                        <ScrollAnimation key={index} className="bg-background p-6 rounded-lg shadow-lg border border-border hover:border-[var(--japanese-red)] transition-all">
                             <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                                 <div>
                                     <h3 className="text-xl font-bold text-[var(--japanese-red)]">{item.role}</h3>
@@ -74,7 +75,7 @@ export function ExperienceSection() {
                                 <div className="text-[var(--japanese-gold)] italic mt-2 md:mt-0 whitespace-nowrap">{item.date}</div>
                             </div>
                             <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
-                        </div>
+                        </ScrollAnimation>
                     ))}
                 </div>
             </div>
