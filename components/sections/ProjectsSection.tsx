@@ -23,14 +23,6 @@ const projects = [
         featured: true,
     },
     {
-        title: 'Robotic Ocular System v2.0',
-        desc: 'Robotic eye tracking system with YOLO-based detection, Kalman filtering, and ESP32 servo control.',
-        icon: <Eye className="h-7 w-7" />,
-        tags: ['Robotics', 'YOLO', 'ESP32'],
-        github: 'https://github.com/Iamm3taphorical/Complete-robotic-ocular-system-v2.0',
-        featured: true,
-    },
-    {
         title: 'Surveillance Drone Demo',
         desc: 'Autonomous surveillance drone with integrated computer vision for real-time monitoring.',
         icon: <Bot className="h-6 w-6" />,

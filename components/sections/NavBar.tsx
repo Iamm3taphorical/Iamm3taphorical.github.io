@@ -6,7 +6,7 @@ import { Waves, Moon, Sun, Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const navItems = ['Home', 'About', 'Education', 'Experience', 'Skills', 'Projects', 'Contact']
+const navItems = ['Home', 'About', 'Education', 'Experience', 'Skills', 'Projects', 'Certifications', 'Contact']
 
 export function NavBar() {
     const { theme, setTheme } = useTheme()
