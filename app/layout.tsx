@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ShaderAnimation } from "@/components/ui/shader-animation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <ThemeProvider
           attribute="class"
@@ -34,6 +35,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* Global Background Shader */}
+          <div className="fixed inset-0 z-[-1] opacity-40 pointer-events-none">
+            <ShaderAnimation />
+          </div>
           {children}
         </ThemeProvider>
       </body>

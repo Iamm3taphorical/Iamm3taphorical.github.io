@@ -2,24 +2,17 @@
 
 import React from 'react'
 import { Mail, Phone, MapPin, Linkedin, Github } from 'lucide-react'
-import DigitalPetalsShader from '@/components/ui/digital-petals-shader'
 
 export function ContactSection() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         alert('Thank you for your message! I will get back to you soon.')
-        // Reset form
         const form = e.target as HTMLFormElement
         form.reset()
     }
 
     return (
         <section id="contact" className="py-24 bg-background relative overflow-hidden">
-            {/* Digital Petals Shader - Background for this section */}
-            <div className="absolute inset-0 z-0 opacity-30">
-                <DigitalPetalsShader />
-            </div>
-
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">

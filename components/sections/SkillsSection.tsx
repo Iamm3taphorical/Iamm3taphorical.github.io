@@ -1,7 +1,6 @@
 'use client'
 
 import { Code2, Globe, Database, Cpu, Users, Brain, Terminal, CircuitBoard, Layers } from 'lucide-react'
-import { ShaderAnimation } from '@/components/ui/shader-animation'
 import { ScrollAnimation } from '@/components/ui/scroll-animation'
 
 export function SkillsSection() {
@@ -60,11 +59,6 @@ export function SkillsSection() {
 
     return (
         <section id="skills" className="py-24 relative overflow-hidden">
-            {/* Shader Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
-                <ShaderAnimation />
-            </div>
-
             <div className="container mx-auto px-6 relative z-10">
                 <ScrollAnimation className="text-center mb-16 relative">
                     <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">

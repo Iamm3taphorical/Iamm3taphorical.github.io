@@ -1,20 +1,13 @@
 'use client'
 
-import { DotScreenShader } from '@/components/ui/dot-shader-background'
-import { cn } from '@/lib/utils'
 import { Typewriter } from 'react-simple-typewriter'
 
 export function HeroSection() {
     return (
         <section id="home" className="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden">
-            {/* Background Shader */}
-            <div className="absolute inset-0 z-0">
-                <DotScreenShader />
-            </div>
-
             <div className="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
                 <div className="hero-content">
-                    <h1 className="text-5xl md:text-7xl font-bold mb-6 text-[var(--japanese-red)] relative inline-block">
+                    <h1 className="text-5xl md:text-7xl font-bold mb-6 text-foreground relative inline-block">
                         👋 Hello, I’m <br /> Mahir Dyan
                         <span className="absolute bottom-0 left-0 w-full h-1 bg-[var(--japanese-gold)] translate-y-2"></span>
                     </h1>
@@ -75,35 +68,9 @@ export function HeroSection() {
                 </div>
 
                 <div className="hidden md:flex justify-center items-center">
-                    {/* Coding GIF */}
-                    <div className="rounded-xl overflow-hidden shadow-2xl border-4 border-[var(--japanese-red)]">
-                        <img src="https://github.com/abhisheknaiidu/abhisheknaiidu/blob/master/code.gif?raw=true" alt="Coding GIF" className="w-full max-w-md" />
-                    </div>
+                    {/* Placeholder for visual balance if needed, or left empty as requested to remove the GIF */}
                 </div>
             </div>
-
-            {/* Decorative Elements */}
-            <div className="absolute top-[10%] right-[5%] text-9xl text-[var(--japanese-red)] opacity-5 pointer-events-none select-none font-japanese">
-                The Dot
-            </div>
-            <div className="absolute top-[10%] right-[5%] text-[10rem] text-[var(--japanese-red)] opacity-5 pointer-events-none select-none font-serif z-0">
-                風
-            </div>
-            <div className="absolute bottom-[10%] left-[5%] text-[8rem] text-[var(--japanese-gold)] opacity-5 pointer-events-none select-none font-serif z-0">
-                桜
-            </div>
-
-            {/* Sakura animation div mapping */}
-            {[...Array(10)].map((_, i) => (
-                <div
-                    key={i}
-                    className="sakura"
-                    style={{
-                        left: `${5 + i * 10}%`,
-                        animationDelay: `${i * 2}s`
-                    }}
-                />
-            ))}
         </section>
     )
 }
