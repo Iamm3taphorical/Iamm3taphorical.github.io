@@ -1,49 +1,112 @@
 'use client'
 
 import { ScrollAnimation } from '@/components/ui/scroll-animation'
+import { motion } from 'framer-motion'
+import { GraduationCap, MapPin, Calendar } from 'lucide-react'
+
+const education = [
+    {
+        degree: "Bachelor of Computer Science and Engineering",
+        institution: "BRAC University",
+        location: "Dhaka, Bangladesh",
+        period: "2023 - Present",
+        description: "Pursuing BSc in CSE with focus on AI, Robotics, and Software Engineering",
+        current: true,
+    },
+    {
+        degree: "Higher Secondary School Certificate",
+        institution: "Mohammadpur Government College",
+        location: "Dhaka, Bangladesh",
+        period: "2020 - 2022",
+        description: "Science stream with focus on Physics, Chemistry, and Mathematics",
+        current: false,
+    },
+    {
+        degree: "Secondary School Certificate",
+        institution: "Dhanmondi Government Boys High School",
+        location: "Dhaka, Bangladesh",
+        period: "2017 - 2020",
+        description: "Foundation education in science and mathematics",
+        current: false,
+    },
+]
 
 export function EducationSection() {
-    const education = [
-        {
-            degree: 'Bachelor of Science in Computer Science and Engineering',
-            school: 'BRAC University',
-            date: '2024 - Present',
-            desc: 'Currently pursuing, maintaining a high academic standing with a focus on core computer science relationships and mathematics.',
-        },
-        {
-            degree: 'Higher Secondary Certificate (HSC)',
-            school: 'Mohammadpur Government College',
-            date: '2021 - 2023',
-            desc: 'Achieved GPA 5.00/5.00. Active member of the Science Club.',
-        },
-        {
-            degree: 'Secondary School Certificate (SSC)',
-            school: 'Ali Hossain Girls’ High School',
-            date: '2019 - 2021',
-            desc: 'Achieved GPA 5.00/5.00. Graduated with honors.',
-        }
-    ]
-
     return (
-        <section id="education" className="py-24 bg-background">
-            <div className="container mx-auto px-6">
-                <ScrollAnimation className="text-center mb-16 relative">
-                    <h2 className="text-4xl font-bold text-[var(--japanese-red)] inline-block relative after:content-[''] after:absolute after:w-24 after:h-1 after:bg-[var(--japanese-gold)] after:-bottom-4 after:left-1/2 after:-translate-x-1/2">
-                        Education
-                    </h2>
+        <section id="education" className="py-24 relative overflow-hidden">
+            {/* Background */}
+            <div className="absolute inset-0 bg-gradient-to-b from-card/50 via-background to-card/50 pointer-events-none" />
+
+            <div className="container mx-auto px-6 relative z-10">
+                <ScrollAnimation className="text-center mb-16">
+                    <h2 className="section-title">Education</h2>
                 </ScrollAnimation>
 
-                <div className="grid gap-8 max-w-4xl mx-auto">
+                {/* Timeline */}
+                <div className="max-w-3xl mx-auto relative">
+                    {/* Timeline Line */}
+                    <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary/20" />
+
                     {education.map((item, index) => (
-                        <ScrollAnimation key={index} className="bg-card p-6 rounded-lg shadow-lg border border-border hover:border-[var(--japanese-red)] transition-all relative pl-8 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-2 before:bg-[var(--japanese-red)] before:rounded-l-lg">
-                            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                                <div>
-                                    <h3 className="text-xl font-bold text-foreground">{item.degree}</h3>
-                                    <h4 className="text-lg font-medium text-[var(--secondary)] dark:text-[var(--secondary-foreground)]">{item.school}</h4>
-                                </div>
-                                <div className="text-[var(--japanese-gold)] italic mt-2 md:mt-0 whitespace-nowrap">{item.date}</div>
+                        <ScrollAnimation
+                            key={index}
+                            delay={index * 0.15}
+                            direction={index % 2 === 0 ? "right" : "left"}
+                        >
+                            <div className={`relative flex items-center mb-12 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                                {/* Timeline Dot */}
+                                <motion.div
+                                    className="absolute left-8 md:left-1/2 w-4 h-4 -translate-x-1/2 rounded-full bg-primary z-10"
+                                    initial={{ scale: 0 }}
+                                    whileInView={{ scale: 1 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.2, type: "spring" }}
+                                >
+                                    {item.current && (
+                                        <span className="absolute inset-0 rounded-full bg-primary animate-ping opacity-75" />
+                                    )}
+                                </motion.div>
+
+                                {/* Content Card */}
+                                <motion.div
+                                    className={`ml-16 md:ml-0 md:w-[calc(50%-2rem)] ${index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'}`}
+                                    whileHover={{ scale: 1.02 }}
+                                >
+                                    <div className="card-3d bg-card/80 backdrop-blur-sm p-6 rounded-2xl border border-border hover:border-primary/30 transition-all group">
+                                        {/* Current Badge */}
+                                        {item.current && (
+                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium mb-3">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                                                Currently Pursuing
+                                            </span>
+                                        )}
+
+                                        <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                                            {item.degree}
+                                        </h3>
+
+                                        <div className="flex items-center gap-2 text-primary font-medium mb-2">
+                                            <GraduationCap className="h-4 w-4" />
+                                            {item.institution}
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
+                                            <div className="flex items-center gap-1">
+                                                <MapPin className="h-3.5 w-3.5" />
+                                                {item.location}
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <Calendar className="h-3.5 w-3.5" />
+                                                {item.period}
+                                            </div>
+                                        </div>
+
+                                        <p className="text-sm text-muted-foreground">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </motion.div>
                             </div>
-                            <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
                         </ScrollAnimation>
                     ))}
                 </div>

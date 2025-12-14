@@ -12,7 +12,7 @@ import { Footer } from '@/components/sections/Footer'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground antialiased selection:bg-[var(--japanese-red)] selection:text-white">
+    <main className="min-h-screen bg-background text-foreground antialiased selection:bg-primary/30 selection:text-foreground overflow-x-hidden">
       <NavBar />
       <HeroSection />
       <AboutSection />
