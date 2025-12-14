@@ -22,12 +22,12 @@ export function HeroSection() {
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Status Badge */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4 }}
+                        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.6 }}
                         className="mb-6"
                     >
-                        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-medium">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium animate-pulse-glow">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -38,23 +38,23 @@ export function HeroSection() {
 
                     {/* Main Heading */}
                     <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.1 }}
-                        className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 text-foreground"
+                        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 text-foreground"
                     >
                         Hi, I'm{' '}
-                        <span className="text-primary">
+                        <span className="animate-shimmer">
                             Mahir Dyan
                         </span>
                     </motion.h1>
 
                     {/* Typewriter */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.2 }}
-                        className="text-base sm:text-xl md:text-2xl lg:text-3xl font-medium mb-6 sm:mb-8 text-muted-foreground h-[60px] sm:h-[80px] flex items-center justify-center"
+                        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium mb-6 sm:mb-8 text-muted-foreground h-[60px] sm:h-[80px] flex items-center justify-center"
                     >
                         <span className="text-primary mr-1">&lt;</span>
                         <Typewriter
@@ -76,9 +76,9 @@ export function HeroSection() {
 
                     {/* Description */}
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.3 }}
+                        initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.6, delay: 0.3 }}
                         className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 px-2"
                     >
                         Building algorithms, exploring machine vision, and developing full-stack applications.
@@ -86,10 +86,10 @@ export function HeroSection() {
 
                     {/* Social Links */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.4 }}
-                        className="flex flex-wrap gap-3 justify-center mb-8 sm:mb-10"
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="flex flex-wrap gap-3 sm:gap-4 justify-center mb-8 sm:mb-10"
                     >
                         {socialLinks.map((social, index) => (
                             <motion.a
@@ -97,9 +97,12 @@ export function HeroSection() {
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-2.5 sm:p-3 rounded-xl bg-card/50 border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors"
-                                whileHover={{ y: -2 }}
+                                className="p-3 rounded-xl bg-card/80 backdrop-blur-sm border border-border text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
+                                whileHover={{ y: -4, scale: 1.1 }}
                                 whileTap={{ scale: 0.95 }}
+                                initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                                transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 200 }}
                                 aria-label={social.label}
                             >
                                 <social.icon className="h-5 w-5 sm:h-6 sm:w-6" />
@@ -109,41 +112,49 @@ export function HeroSection() {
 
                     {/* CTA Buttons */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.5 }}
-                        className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center"
+                        transition={{ duration: 0.6, delay: 0.6 }}
+                        className="flex flex-col sm:flex-row gap-4 justify-center"
                     >
-                        <a
+                        <motion.a
                             href="#contact"
-                            className="px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors btn-glow"
+                            className="group px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-xl inline-flex items-center justify-center gap-2 btn-glow"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             Get In Touch
-                            <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
-                        </a>
-                        <a
+                            <Mail className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                        </motion.a>
+                        <motion.a
                             href="#projects"
-                            className="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-primary text-primary font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-primary/10 transition-colors"
+                            className="group px-8 py-4 bg-card/80 backdrop-blur-sm border-2 border-primary text-primary font-semibold rounded-xl inline-flex items-center justify-center gap-2 hover:bg-primary/10 transition-all"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
                             View Projects
-                            <ExternalLink className="h-4 w-4 sm:h-5 sm:w-5" />
-                        </a>
+                            <ExternalLink className="h-5 w-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </motion.a>
                     </motion.div>
                 </div>
 
-                {/* Scroll Indicator */}
+                {/* Scroll Indicator - Floating Animation */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 hidden sm:block"
+                    transition={{ delay: 1.2 }}
+                    className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2"
                 >
                     <motion.div
+                        className="w-6 h-10 rounded-full border-2 border-primary/50 flex justify-center pt-2"
                         animate={{ y: [0, 8, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-5 h-8 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-2"
                     >
-                        <div className="w-1 h-2 rounded-full bg-primary" />
+                        <motion.div
+                            className="w-1.5 h-3 rounded-full bg-primary"
+                            animate={{ opacity: [1, 0.3, 1] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                        />
                     </motion.div>
                 </motion.div>
             </div>

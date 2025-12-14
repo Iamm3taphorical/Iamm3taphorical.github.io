@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { GlobalBackground } from "@/components/ui/global-background";
+import { SoundProvider } from "@/components/ui/sound-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,13 +55,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* Optimized Global Background - works in both themes */}
-          <GlobalBackground />
-
-          {/* Main Content */}
-          <div className="relative z-10">
-            {children}
-          </div>
+          <SoundProvider>
+            {/* Canvas Background - Rendered by page.tsx */}
+            <div className="relative z-10">
+              {children}
+            </div>
+          </SoundProvider>
         </ThemeProvider>
       </body>
     </html>

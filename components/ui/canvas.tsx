@@ -1,6 +1,6 @@
 "use client"
 
-// Canvas-based animated line trails that follow cursor movement
+// Canvas-based animated line trails following cursor - rainbow color cycling effect
 // @ts-nocheck
 
 let ctx: CanvasRenderingContext2D | null = null
@@ -11,8 +11,8 @@ let lines: any[] = []
 const E = {
     debug: true,
     friction: 0.5,
-    trails: 80,
-    size: 50,
+    trails: 50,
+    size: 40,
     dampening: 0.025,
     tension: 0.99,
 }
@@ -42,10 +42,6 @@ function Oscillator(opts: any) {
 Oscillator.prototype.update = function () {
     this.phase += this.frequency
     e = this.offset + Math.sin(this.phase) * this.amplitude
-    return e
-}
-
-Oscillator.prototype.value = function () {
     return e
 }
 
@@ -124,7 +120,6 @@ function onMousemove(event: MouseEvent | TouchEvent) {
             pos.x = e.clientX
             pos.y = e.clientY
         }
-        e.preventDefault()
     }
 
     function handleTouch(e: TouchEvent) {
@@ -136,9 +131,9 @@ function onMousemove(event: MouseEvent | TouchEvent) {
 
     document.removeEventListener('mousemove', onMousemove as any)
     document.removeEventListener('touchstart', onMousemove as any)
-    document.addEventListener('mousemove', handleMove as any)
-    document.addEventListener('touchmove', handleMove as any)
-    document.addEventListener('touchstart', handleTouch as any)
+    document.addEventListener('mousemove', handleMove as any, { passive: true })
+    document.addEventListener('touchmove', handleMove as any, { passive: true })
+    document.addEventListener('touchstart', handleTouch as any, { passive: true })
     handleMove(event)
     initLines()
     render()
@@ -149,8 +144,8 @@ function render() {
         ctx.globalCompositeOperation = 'source-over'
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         ctx.globalCompositeOperation = 'lighter'
-        ctx.strokeStyle = `hsla(${Math.round(f.update())},100%,50%,0.025)`
-        ctx.lineWidth = 10
+        ctx.strokeStyle = `hsla(${Math.round(f.update())}, 90%, 50%, 0.03)`
+        ctx.lineWidth = 8
         for (let i = 0; i < E.trails; i++) {
             const line = lines[i]
             line.update()
@@ -163,7 +158,7 @@ function render() {
 
 function resizeCanvas() {
     if (ctx) {
-        ctx.canvas.width = window.innerWidth - 20
+        ctx.canvas.width = window.innerWidth
         ctx.canvas.height = window.innerHeight
     }
 }
@@ -186,8 +181,8 @@ export const renderCanvas = function () {
         offset: 285,
     })
 
-    document.addEventListener('mousemove', onMousemove as any)
-    document.addEventListener('touchstart', onMousemove as any)
+    document.addEventListener('mousemove', onMousemove as any, { passive: true })
+    document.addEventListener('touchstart', onMousemove as any, { passive: true })
     document.body.addEventListener('orientationchange', resizeCanvas)
     window.addEventListener('resize', resizeCanvas)
     window.addEventListener('focus', () => {

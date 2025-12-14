@@ -18,18 +18,18 @@ export function ScrollAnimation({
     className,
     delay = 0,
     direction = "up",
-    duration = 0.4,
+    duration = 0.6,
     once = true,
 }: ScrollAnimationProps) {
     const ref = useRef<HTMLDivElement>(null)
-    const isInView = useInView(ref, { once, margin: "-50px" })
+    const isInView = useInView(ref, { once, margin: "-80px" })
 
     const getVariants = (): Variants => {
         const directions = {
-            up: { y: 20, x: 0 },
-            down: { y: -20, x: 0 },
-            left: { y: 0, x: 20 },
-            right: { y: 0, x: -20 },
+            up: { y: 40, x: 0 },
+            down: { y: -40, x: 0 },
+            left: { y: 0, x: 40 },
+            right: { y: 0, x: -40 },
             scale: { y: 0, x: 0 },
         }
 
@@ -40,17 +40,19 @@ export function ScrollAnimation({
                 opacity: 0,
                 y,
                 x,
-                scale: direction === "scale" ? 0.95 : 1,
+                scale: direction === "scale" ? 0.9 : 1,
+                filter: "blur(4px)",
             },
             visible: {
                 opacity: 1,
                 y: 0,
                 x: 0,
                 scale: 1,
+                filter: "blur(0px)",
                 transition: {
                     duration,
                     delay,
-                    ease: "easeOut",
+                    ease: [0.25, 0.4, 0.25, 1],
                 },
             },
         }
@@ -78,10 +80,10 @@ interface StaggerContainerProps {
 export function StaggerContainer({
     children,
     className,
-    staggerDelay = 0.08,
+    staggerDelay = 0.1,
 }: StaggerContainerProps) {
     const ref = useRef<HTMLDivElement>(null)
-    const isInView = useInView(ref, { once: true, margin: "-30px" })
+    const isInView = useInView(ref, { once: true, margin: "-50px" })
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -89,7 +91,7 @@ export function StaggerContainer({
             opacity: 1,
             transition: {
                 staggerChildren: staggerDelay,
-                delayChildren: 0.05,
+                delayChildren: 0.1,
             },
         },
     }
@@ -117,14 +119,18 @@ export function StaggerItem({
     const itemVariants: Variants = {
         hidden: {
             opacity: 0,
-            y: 15,
+            y: 30,
+            scale: 0.95,
+            filter: "blur(4px)",
         },
         visible: {
             opacity: 1,
             y: 0,
+            scale: 1,
+            filter: "blur(0px)",
             transition: {
-                duration: 0.3,
-                ease: "easeOut",
+                duration: 0.5,
+                ease: [0.25, 0.4, 0.25, 1],
             },
         },
     }
