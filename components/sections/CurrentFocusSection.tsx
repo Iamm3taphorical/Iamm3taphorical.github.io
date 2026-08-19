@@ -13,8 +13,8 @@ const focusAreas = [
     },
     {
         icon: <Brain className="h-6 w-6" />,
-        title: "Computer Vision & ML",
-        description: "YOLO, OpenCV pipelines for robotics applications",
+        title: "Computer Vision",
+        description: "YOLO + OpenCV pipelines for robotics applications",
         progress: 60,
     },
     {
@@ -31,8 +31,8 @@ const focusAreas = [
     },
     {
         icon: <Cloud className="h-6 w-6" />,
-        title: "Cloud & Deployment",
-        description: "Containerization, inference endpoints, edge computing",
+        title: "AI Training & Evaluation",
+        description: "Contributing to foundation-model improvement through quality-focused workflows",
         progress: 45,
     },
     {
@@ -44,9 +44,9 @@ const focusAreas = [
 ]
 
 const shortTermGoals = [
-    "Convert YOLO notebooks into reusable Python packages with CLI",
-    "Add test suites and examples to CSE220_Data_Structure",
-    "Deploy perception → inference → dashboard demo",
+    "Build production-grade Java DSA implementations with structured documentation",
+    "Advance robotics systems integration: sensor fusion, control loops, and real-time pipelines",
+    "Strengthen testing, CI/CD, modular architecture, and open-source documentation",
 ]
 
 export function CurrentFocusSection() {

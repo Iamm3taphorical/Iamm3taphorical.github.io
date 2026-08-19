@@ -33,7 +33,7 @@ export function AboutSection() {
                         I'm a <span className="text-primary font-semibold">Computer Science & Engineering student</span> at BRAC University (Dhaka, Bangladesh), passionate about <span className="text-primary font-semibold">software development</span>, <span className="text-primary font-semibold">robotics</span>, <span className="text-primary font-semibold">automation</span>, and <span className="text-primary font-semibold">AI-driven solutions</span>.
                     </p>
                     <p>
-                        I build algorithms, explore machine vision and control systems, and develop full-stack web applications. My approach is collaborative, curious, and impact-focused.
+                        I design algorithms, build full-stack products, and integrate machine vision, control systems, and intelligent pipelines into real-world platforms. My approach centers on clarity, modularity, collaboration, and long-term scalability.
                     </p>
                 </ScrollAnimation>
 

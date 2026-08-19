@@ -94,6 +94,36 @@ const certifications = [
         category: 'Competition',
         featured: true,
     },
+    {
+        title: 'AWS Educate Machine Learning Foundations', issuer: 'AWS', desc: 'Machine learning foundations certificate.', icon: <Cloud className="h-6 w-6" />, link: 'https://www.credly.com/badges/8d1525e5-b4b1-4aca-a920-9b738e9d3a97', category: 'Cloud & ML',
+    },
+    {
+        title: 'Introduction to Cybersecurity', issuer: 'Cisco', desc: 'Core cybersecurity concepts and practices.', icon: <Brain className="h-6 w-6" />, link: 'https://www.credly.com/badges/fa73c9d9-fc1e-4a9e-9a66-a6e06055c06f', category: 'AI',
+    },
+    {
+        title: 'Introduction to SQL', issuer: 'DataCamp', desc: 'Database querying and SQL fundamentals.', icon: <Code2 className="h-6 w-6" />, link: 'https://www.datacamp.com/completed/statement-of-accomplishment/course/408df2cccd30757e5739d873ad4c57489083fda5', category: 'Development',
+    },
+    {
+        title: 'The Ultimate Java Programming Course', issuer: 'Udemy', desc: 'Comprehensive Java programming training.', icon: <Code2 className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-202c4400-2d22-47af-9593-de8905f02bcb/', category: 'Development',
+    },
+    {
+        title: 'HTML & CSS Web Projects Workshop', issuer: 'Udemy', desc: 'Hands-on web project development.', icon: <Code2 className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-d24aba26-a13d-450c-914f-c68fba6777ce/', category: 'Development',
+    },
+    {
+        title: 'C# Basics: From Zero to First Applications', issuer: 'Udemy', desc: 'C# language and application fundamentals.', icon: <Code2 className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-34dd8bc7-d152-40c5-a6a9-6c8d07829a88/', category: 'Development',
+    },
+    {
+        title: 'Full Stack Web Development Crash Course', issuer: 'Udemy', desc: 'Full-stack web-development foundations.', icon: <Code2 className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-356fc9d3-3ea7-4832-9d13-e98264b20dc6/', category: 'Development',
+    },
+    {
+        title: 'Complete JavaScript Programming', issuer: 'Udemy', desc: 'JavaScript programming and web-development skills.', icon: <Code2 className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-3daee97a-2e58-46e5-bace-2ce882f3f55f/', category: 'Development',
+    },
+    {
+        title: 'Agentic Coding with AI Tools', issuer: 'Udemy', desc: 'AI-assisted software-development workflows.', icon: <Sparkles className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-1506498b-e799-4bd5-9249-b6fbefb80f40/', category: 'AI',
+    },
+    {
+        title: 'Quantum Computing with Microsoft Azure', issuer: 'Udemy', desc: 'Quantum-computing concepts on Azure.', icon: <Cloud className="h-6 w-6" />, link: 'https://www.udemy.com/certificate/UC-e3d9d0d8-7aed-40f2-9e7e-a9192802e040/', category: 'Cloud & ML',
+    },
 ]
 
 const categories = ['All', 'AI', 'Development', 'Robotics', 'Cloud & ML', 'Competition']

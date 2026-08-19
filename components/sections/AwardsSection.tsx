@@ -1,84 +1,15 @@
 'use client'
 
 import { ScrollAnimation, StaggerContainer, StaggerItem } from '@/components/ui/scroll-animation'
-import { motion } from 'framer-motion'
-import { Trophy, Medal, Award } from 'lucide-react'
+import { Award, BookOpen, Medal, Trophy } from 'lucide-react'
 
 const awards = [
-    {
-        title: "Top 8 Finalist",
-        event: "AI Hackathon",
-        description: "Competed among numerous teams and secured a top 8 position with an innovative AI solution",
-        icon: <Trophy className="h-8 w-8" />,
-        color: "from-amber-500/20 to-yellow-500/20 border-amber-500/30",
-        iconColor: "text-amber-500",
-    },
-    {
-        title: "Participant",
-        event: "National Robotics Championship (NRC)",
-        description: "Competed in the National Robotics Championship representing BRAC University",
-        icon: <Medal className="h-8 w-8" />,
-        color: "from-slate-400/20 to-gray-400/20 border-slate-400/30",
-        iconColor: "text-slate-400",
-    },
-    {
-        title: "Participant",
-        event: "Traction অভ্যুদয়",
-        description: "Participated in the national robotics competition focused on innovation and engineering",
-        icon: <Award className="h-8 w-8" />,
-        color: "from-orange-500/20 to-amber-500/20 border-orange-500/30",
-        iconColor: "text-orange-500",
-    },
+    { title: 'Best Game', event: 'FootballVerse AI · BRAC University Club Fair — Summer 2026', description: 'Recognised among all BUCC departmental entries for innovation, creativity, and technical excellence.', icon: Trophy, tone: 'amber' },
+    { title: 'Top 8 Finalist', event: 'AI Hackathon 2025 · Team Null_Pointers_V3', description: 'Built an AI Flood Management System for flood prediction, early SMS alerts, and community preparedness.', icon: Trophy, tone: 'emerald' },
+    { title: 'Published Author', event: 'BUCC SyncUp · April 2026', description: 'Published “AI vs AI: The Future of Cyber Defence,” examining AI as both cyber attacker and defender.', icon: BookOpen, tone: 'violet' },
+    { title: 'Technical Write-up', event: 'SignTutor 1.0 · Kaggle', description: 'Published work on real-time, privacy-first ASL tutoring with computer vision and Gemini feedback.', icon: Award, tone: 'blue' },
+    { title: 'Participant', event: 'National Robotics Championship (NRC)', description: 'Participated in a national-level robotics competition.', icon: Medal, tone: 'slate' },
+    { title: 'Participant', event: 'Traction Obhyudoy Robotics Competition', description: 'Competed in Prompt Engineering and Pathfinder line-following robot events.', icon: Medal, tone: 'orange' },
 ]
-
-export function AwardsSection() {
-    return (
-        <section className="py-24 relative overflow-hidden">
-            {/* Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background pointer-events-none" />
-
-            <div className="container mx-auto px-6 relative z-10">
-                <ScrollAnimation className="text-center mb-16">
-                    <h2 className="section-title">Awards & Competitions</h2>
-                    <p className="mt-8 text-muted-foreground max-w-2xl mx-auto text-lg">
-                        Recognition and achievements from hackathons and robotics competitions
-                    </p>
-                </ScrollAnimation>
-
-                <StaggerContainer className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                    {awards.map((award, index) => (
-                        <StaggerItem key={index}>
-                            <motion.div
-                                className={`h-full p-6 rounded-2xl border backdrop-blur-sm bg-gradient-to-br ${award.color} transition-all duration-300 text-center group`}
-                                whileHover={{
-                                    y: -8,
-                                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
-                                }}
-                            >
-                                {/* Icon */}
-                                <motion.div
-                                    className={`mx-auto mb-4 p-4 rounded-2xl bg-card/50 inline-block ${award.iconColor}`}
-                                    whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {award.icon}
-                                </motion.div>
-
-                                {/* Content */}
-                                <h3 className="text-lg font-bold text-foreground mb-1">
-                                    {award.title}
-                                </h3>
-                                <p className="text-primary font-medium mb-3">
-                                    {award.event}
-                                </p>
-                                <p className="text-sm text-muted-foreground">
-                                    {award.description}
-                                </p>
-                            </motion.div>
-                        </StaggerItem>
-                    ))}
-                </StaggerContainer>
-            </div>
-        </section>
-    )
-}
+const tones: Record<string, string> = { amber: 'from-amber-500/20 to-yellow-500/20 border-amber-500/30 text-amber-500', emerald: 'from-emerald-500/20 to-teal-500/20 border-emerald-500/30 text-emerald-500', violet: 'from-violet-500/20 to-purple-500/20 border-violet-500/30 text-violet-500', blue: 'from-blue-500/20 to-cyan-500/20 border-blue-500/30 text-blue-500', slate: 'from-slate-400/20 to-gray-400/20 border-slate-400/30 text-slate-400', orange: 'from-orange-500/20 to-amber-500/20 border-orange-500/30 text-orange-500' }
+export function AwardsSection() { return <section className="py-20 md:py-24 relative overflow-hidden"><div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background pointer-events-none" /><div className="container mx-auto px-4 sm:px-6 relative z-10"><ScrollAnimation className="text-center mb-12"><h2 className="section-title">Awards & Publications</h2><p className="mt-8 text-muted-foreground max-w-2xl mx-auto">Recognition, competition milestones, and writing.</p></ScrollAnimation><StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">{awards.map((award) => { const Icon = award.icon; return <StaggerItem key={award.event}><div className={`h-full p-6 rounded-2xl border bg-gradient-to-br ${tones[award.tone]} transition-transform hover:-translate-y-1`}><div className="mb-4 p-3 rounded-xl bg-card/50 inline-block"><Icon className="h-7 w-7" /></div><h3 className="font-bold text-foreground">{award.title}</h3><p className="font-medium text-sm mt-1">{award.event}</p><p className="text-sm text-muted-foreground mt-3">{award.description}</p></div></StaggerItem>})}</StaggerContainer></div></section> }

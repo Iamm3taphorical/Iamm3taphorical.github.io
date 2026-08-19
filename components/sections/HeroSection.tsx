@@ -2,13 +2,14 @@
 
 import { Typewriter } from 'react-simple-typewriter'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Code2, Trophy, ExternalLink } from 'lucide-react'
+import { Github, Linkedin, Mail, Code2, Trophy, ExternalLink, Terminal } from 'lucide-react'
 
 const socialLinks = [
     { href: "https://www.linkedin.com/in/mahir-dyan-47b396310/", icon: Linkedin, label: "LinkedIn" },
     { href: "https://github.com/Iamm3taphorical", icon: Github, label: "GitHub" },
     { href: "https://codeforces.com/profile/mahir.dyan", icon: Code2, label: "Codeforces" },
     { href: "https://leetcode.com/u/gnkF6xnyA4/", icon: Trophy, label: "LeetCode" },
+    { href: "https://www.hackerrank.com/profile/mahir_dyan", icon: Terminal, label: "HackerRank" },
     { href: "mailto:mahirdyan30@gmail.com", icon: Mail, label: "Email" },
 ]
 
@@ -59,10 +60,12 @@ export function HeroSection() {
                         <span className="text-primary mr-1">&lt;</span>
                         <Typewriter
                             words={[
-                                'CS & Engineering Student',
+                                'Computer Science & Engineering Student',
                                 'Robotics & AI Enthusiast',
-                                'Full-Stack Developer',
-                                'Building, Learning, Sharing'
+                                'Software Developer & System Builder',
+                                'IEEE Research Team Member',
+                                'AI Data Trainer @ SuperAnnotate',
+                                'Always Learning, Building, and Shipping'
                             ]}
                             loop={0}
                             cursor
@@ -81,7 +84,7 @@ export function HeroSection() {
                         transition={{ duration: 0.6, delay: 0.3 }}
                         className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 px-2"
                     >
-                        Building algorithms, exploring machine vision, and developing full-stack applications.
+                        Building full-stack products, intelligent pipelines, and real-world robotics systems with clarity, modularity, and impact in mind.
                     </motion.p>
 
                     {/* Social Links */}
